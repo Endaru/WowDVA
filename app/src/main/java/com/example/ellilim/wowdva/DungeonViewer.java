@@ -1,5 +1,7 @@
 package com.example.ellilim.wowdva;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,6 +57,12 @@ public class DungeonViewer extends AppCompatActivity implements DungeonAdapter.D
         }
         mToast = Toast.makeText(this,"Dungeon: " + clickedDungeonItemIndex + "Clicked", Toast.LENGTH_LONG);
         mToast.show();
+
+        Context context = DungeonViewer.this;
+        Class destinationActivity = DetailedDungeonViewer.class;
+        Intent startDetailedDungeonActivityIntent = new Intent (context,destinationActivity);
+        startDetailedDungeonActivityIntent.putExtra(Intent.EXTRA_TEXT, clickedDungeonItemIndex);
+        startActivity(startDetailedDungeonActivityIntent);
     }
 
 
