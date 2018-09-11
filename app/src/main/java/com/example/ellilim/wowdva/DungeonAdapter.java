@@ -12,13 +12,17 @@ import com.example.ellilim.wowdva.utilities.Dungeon;
 
 import org.w3c.dom.Text;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class DungeonAdapter extends RecyclerView.Adapter<DungeonAdapter.DungeonAdapterViewHolder>{
 
     private Dungeon[] mDungeonData;
     private final DungeonAdapterOnClickHandler mClickHandler;
 
     public interface DungeonAdapterOnClickHandler {
-        void onDungeonItemClick(String clickedDungeonItemIndex);
+        void onDungeonItemClick(Dungeon clickedDungeonItemIndex);
     }
 
     public DungeonAdapter(DungeonAdapterOnClickHandler param) {mClickHandler = param;}
@@ -35,8 +39,7 @@ public class DungeonAdapter extends RecyclerView.Adapter<DungeonAdapter.DungeonA
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            String dungeonName = mDungeonData[adapterPosition].name;
-            mClickHandler.onDungeonItemClick(dungeonName);
+            mClickHandler.onDungeonItemClick(mDungeonData[adapterPosition]);
         }
     }
 
@@ -65,6 +68,13 @@ public class DungeonAdapter extends RecyclerView.Adapter<DungeonAdapter.DungeonA
     }
 
     public void setDungeonData(Dungeon[] dungeons) {
+        Collections.sort(Arrays.asList(dungeons), new Comparator<Dungeon>() {
+            @Override
+            public int compare(Dungeon a1, Dungeon a2) {
+                return a1.expansionId - a2.expansionId;
+            }
+        });
+
         mDungeonData = dungeons;
         notifyDataSetChanged();
     }

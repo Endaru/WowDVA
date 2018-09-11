@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,17 +53,11 @@ public class DungeonViewer extends AppCompatActivity implements DungeonAdapter.D
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
-    public void onDungeonItemClick(String clickedDungeonItemIndex) {
-        if(mToast != null){
-            mToast.cancel();
-        }
-        mToast = Toast.makeText(this,"Dungeon: " + clickedDungeonItemIndex + "Clicked", Toast.LENGTH_LONG);
-        mToast.show();
-
+    public void onDungeonItemClick(Dungeon clickedDungeon) {
         Context context = DungeonViewer.this;
         Class destinationActivity = DetailedDungeonViewer.class;
         Intent startDetailedDungeonActivityIntent = new Intent (context,destinationActivity);
-        startDetailedDungeonActivityIntent.putExtra(Intent.EXTRA_TEXT, clickedDungeonItemIndex);
+        startDetailedDungeonActivityIntent.putExtra("name",clickedDungeon);
         startActivity(startDetailedDungeonActivityIntent);
     }
 
@@ -77,8 +73,8 @@ public class DungeonViewer extends AppCompatActivity implements DungeonAdapter.D
 
             try {
                 String dungeonResults = NetworkUtils.getResponseFromHttpUrl(dungeonSearchResults);
-                Dungeon[] test = DungeonUtils.getDungeonListFromJson(DungeonViewer.this, dungeonResults);
-                return test;
+                Dungeon[] dungeonList = DungeonUtils.getDungeonListFromJson(DungeonViewer.this, dungeonResults);
+                return dungeonList;
 
             } catch (Exception e) {
                 e.printStackTrace();

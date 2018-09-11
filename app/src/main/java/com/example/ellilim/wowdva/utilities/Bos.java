@@ -1,35 +1,39 @@
 package com.example.ellilim.wowdva.utilities;
 
-public class Bos {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Bos implements Parcelable{
     public int id = 0;
     public String name = "";
     public String description = "";
-    public boolean availableInNormalMode = false;
-    public boolean availableInHeroicMode = false;
 
     public Bos(int id, String name){
         this.id = id;
         this.name = name;
     }
 
-    public Bos(int id, String name, String description){
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
     }
 
-    public Bos(int id, String name, String description, boolean normal){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.availableInNormalMode = normal;
-    }
+    public static final Parcelable.Creator<Bos> CREATOR = new Parcelable.Creator<Bos>() {
+        public Bos createFromParcel(Parcel in){
+            return new Bos(in);
+        }
 
-    public Bos(int id, String name, String description, boolean normal, boolean heroic){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.availableInNormalMode = normal;
-        this.availableInHeroicMode = heroic;
+        public Bos[] newArray(int size){
+            return new Bos[size];
+        }
+    };
+
+    private Bos(Parcel in){
+        this.id = in.readInt();
+        this.name = in.readString();
     }
 }

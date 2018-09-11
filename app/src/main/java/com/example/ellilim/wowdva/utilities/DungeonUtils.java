@@ -1,12 +1,13 @@
 package com.example.ellilim.wowdva.utilities;
 
 import android.content.Context;
-import android.hardware.camera2.DngCreator;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Collections;
 
 public class DungeonUtils {
 
@@ -25,15 +26,20 @@ public class DungeonUtils {
 
         for (int i = 0; i < dungeonArray.length(); i++){
             JSONObject dungeon = dungeonArray.getJSONObject(i);
+            JSONArray bossesArray = dungeon.getJSONArray("bosses");
+
+            Bos[] bossList = BossUtils.getBosListFromJson(bossesArray);
 
             Dungeon DungeonInfo = new Dungeon(dungeon.getInt(
                     WDI_ID),dungeon.getString(WDI_NAME),
                     dungeon.getString(WDI_DES),
-                    dungeon.getInt(WDI_EID)
+                    dungeon.getInt(WDI_EID),
+                    bossList
             );
 
             parsedDungeonData[i] = DungeonInfo;
         }
+
         return parsedDungeonData;
     }
 }
