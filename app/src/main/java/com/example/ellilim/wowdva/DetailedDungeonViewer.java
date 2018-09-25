@@ -23,6 +23,5 @@ public class DetailedDungeonViewer extends AppCompatActivity {
         Dungeon d = (Dungeon) i.getParcelableExtra("name");
         mDungeonName.setText(d.name);
         mDungeonDescription.setText(d.description);
-        Log.i("INFORmATION","" + d.bosses[0].name);
         }
 }

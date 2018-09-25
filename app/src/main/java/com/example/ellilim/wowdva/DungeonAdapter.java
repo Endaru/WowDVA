@@ -15,6 +15,7 @@ import org.w3c.dom.Text;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 public class DungeonAdapter extends RecyclerView.Adapter<DungeonAdapter.DungeonAdapterViewHolder>{
 
